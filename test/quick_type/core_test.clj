@@ -3,8 +3,16 @@
             [quick-type.core :refer :all]
             [active.clojure.sum-type :as s]))
 
+;; defines a record-type with constructor make-kaan, predicate kaan?
+;; and accessors kaan-one and kaan-two
 (define-type kaan one two)
+
+;; defines a sum-type of the above kaan record and a new record simon
+;; with constructor make-simon, predicate simon? and accessors as above.
+;; Defines a new sum-type predicate kaan-s?
 (define-type kaan-s [(simon one two) kaan])
+
+
 
 (deftest record-test
   (testing "record test"
