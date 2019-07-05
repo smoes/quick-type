@@ -1,10 +1,6 @@
 # quick-type
 
-A Clojure library designed to ... well, that part is up to you.
-
-## Usage
-
-FIXME
+A thin layer for active-clojure records and sum-types to allow quick and dirty definitions.
 
 ## License
 
