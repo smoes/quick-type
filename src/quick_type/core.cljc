@@ -1,6 +1,8 @@
 (ns quick-type.core
-  (:require [active.clojure.record :as r]
-            [active.clojure.sum-type :as s]))
+  (:require #?(:clj [active.clojure.record :as r])
+            #?(:cljs [active.clojure.cljs.record :as r :include-macros true])
+            #?(:cljs [cljs.test :refer-macros [is deftest run-tests testing]])
+            [active.clojure.sum-type :as s :include-macros true]))
 
 
 (defn define-record-type [type-name field-names]
@@ -24,7 +26,7 @@
                        member))
                 members)
         new-records (filter list? members)
-        new-record-defs (map (fn [[x & xs]]
+        new-record-defs (map (fn [[x xs]]
                                (define-record-type x xs)) new-records)
         predicate   (symbol (str type-name "?"))
         ]
@@ -37,8 +39,8 @@
 
 
 
-(defmacro define-type [name & forms]
-  (let [first-form (first forms)]
-    (if (vector? first-form)
-      (define-sum-type name first-form)
-      (define-record-type name forms))))
+(defmacro def-type [name forms]
+  (define-sum-type name forms))
+
+(defmacro def-record [name forms]
+  (define-record-type name forms))

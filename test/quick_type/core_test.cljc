@@ -1,18 +1,17 @@
 (ns quick-type.core-test
-  (:require [clojure.test :refer :all]
-            [quick-type.core :refer :all]
-            [active.clojure.sum-type :as s]))
+  (:require #?(:clj [clojure.test :refer :all])
+            #?(:cljs [cljs.test :refer-macros [deftest is testing run-tests]])
+            [quick-type.core :as c :include-macros true]
+            [active.clojure.sum-type :as s :include-macros true]))
 
 ;; defines a record-type with constructor make-kaan, predicate kaan?
 ;; and accessors kaan-one and kaan-two
-(define-type kaan one two)
+(c/def-record kaan [one two])
 
 ;; defines a sum-type of the above kaan record and a new record simon
 ;; with constructor make-simon, predicate simon? and accessors as above.
 ;; Defines a new sum-type predicate kaan-s?
-(define-type kaan-s [(simon one two) kaan])
-
-
+(c/def-type kaan-s [(simon [one two]) kaan])
 
 (deftest record-test
   (testing "record test"
